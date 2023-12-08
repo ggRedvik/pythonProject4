@@ -338,9 +338,8 @@ while True:
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and paddle.left > 0:
             paddle.left -= paddle_speed
-        if key[pygame.K_RIGHT] and paddle:
-            if key[pygame.K_RIGHT] and paddle.right < WIDTH:
-                paddle.right += paddle_speed
+        if key[pygame.K_RIGHT] and paddle.right < WIDTH:
+            paddle.right += paddle_speed  # Fix this line (removed the extra 'if' condition)
 
             # Обработка столкновения с краем окна для бонусного мяча
             if bonus_ball_active:
@@ -358,8 +357,12 @@ while True:
             if paused:
                 pause_text = pause_font.render("PAUSED", True, pygame.Color('white'))
                 sc.blit(pause_text, (WIDTH // 2 - 100, HEIGHT // 2 - 30))
-                draw_menu()
+                draw_pause_menu()  # Use draw_pause_menu to display pause menu
             elif game_over:
+                draw_menu()
+            elif not len(block_list):
+                win_text = win_font.render("WIN!!!", True, pygame.Color('yellow'))
+                sc.blit(win_text, (WIDTH // 2 - win_text.get_width() // 2, HEIGHT // 2 - win_text.get_height() // 2))
                 draw_menu()
 
             # update screen
