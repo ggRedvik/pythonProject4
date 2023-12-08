@@ -32,7 +32,7 @@ pygame.init()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 # background image
-img = pygame.image.load('1.jpg').convert()
+img = pygame.image.load('images (1).jpg').convert()
 
 # Pause variables and font
 paused = False
