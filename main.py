@@ -119,6 +119,17 @@ class Game:
                                        (rnd(30, 256), rnd(30, 256), rnd(30, 256)))  # Random color for each letter
         sc.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 4))
 
+    def save_highscore(self, highscore):
+        with open('highscore.txt', 'w') as file:
+                file.write(str(highscore))
+
+    def load_highscore(self):
+            try:
+                with open('highscore.txt', 'r') as file:
+                    return int(file.read())
+            except FileNotFoundError:
+                return 0
+
 
     def detect_collision(self, rect):
         if self.dx > 0:
@@ -324,6 +335,9 @@ while True:
             game.draw_menu()
             pygame.display.flip()
             pygame.time.delay(3000)  # Display game over message for 3 seconds
+            highscore = game.load_highscore()
+            if game.score > highscore:
+                game.save_highscore(game.score)  # Save highscore
 
         elif not len(game.block_list):
             game.game_over = True
@@ -332,6 +346,9 @@ while True:
             sc.blit(win_text, (WIDTH // 2 - win_text.get_width() // 2, HEIGHT // 2 - win_text.get_height() // 2))
             game.draw_menu()
             pygame.display.flip()
+            highscore = game.load_highscore()
+            if game.score > highscore:
+                game.save_highscore(game.score)  # Save highscore
 
         # control
         key = pygame.key.get_pressed()
